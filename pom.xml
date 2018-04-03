@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.test.edgware</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>config-service</module>
+		<module>eureka-service</module>
+		<module>hystrix-dashboard</module>
+		<module>reservation-service</module>
+		<module>zipkin-service</module>
+		<module>reservation-client</module>
+	</modules>
+
+	<properties>
+		<docker.image.prefix>anoophp</docker.image.prefix>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.parent</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<configuration>
+					<imageName>reservation</imageName>
+					<baseImage>java</baseImage>
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<!-- copy the service's jar file from target into the root directory 
+						of the image -->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
