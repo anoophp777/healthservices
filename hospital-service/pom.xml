@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -23,6 +23,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring.cloud.release.version>Edgware.BUILD-SNAPSHOT</spring.cloud.release.version>
+		<docker.registry.name></docker.registry.name><!-- leave empty for docker 
+			hub; use e.g. "localhost:5000/" for a local docker registry -->
+		<docker.repository.name>${docker.registry.name}anoophp/${project.artifactId}</docker.repository.name>
+		<docker.port>8761</docker.port>
 	</properties>
 
 	<dependencies>
@@ -88,6 +92,40 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jolokia</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.13.3</version>
+				<configuration>
+					<sourceDirectory>/src/main/docker</sourceDirectory>
+					<images>
+						<image>
+							<alias>${project.artifactId}</alias>
+							<name>${docker.repository.name}:${project.version}</name>
+							<build>
+								<from>java:8-jre</from>
+								<maintainer>phauer</maintainer>
+								<assembly>
+									<descriptor>docker-assembly.xml</descriptor>
+								</assembly>
+								<ports>
+									<port>${docker.port}</port>
+								</ports>
+								<cmd>
+									<shell>java -jar \
+										/maven/${project.build.finalName}.jar server
+										\
+										/maven/docker-config.yml</shell>
+								</cmd>
+							</build>
+							<run>
+								<!-- later more -->
+							</run>
+						</image>
+					</images>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
