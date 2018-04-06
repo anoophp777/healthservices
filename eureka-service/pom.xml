@@ -77,7 +77,7 @@
                                 <name>${docker.repository.name}:${project.version}</name>
                                 <build>
                                     <from>java:8-jre</from>
-                                    <maintainer>phauer</maintainer>
+                                    <maintainer>anoophp</maintainer>
                                     <assembly>
                                         <descriptor>docker-assembly.xml</descriptor>
                                     </assembly>
