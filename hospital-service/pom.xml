@@ -95,38 +95,37 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.jolokia</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.13.3</version>
-				<configuration>
-					<sourceDirectory>/src/main/docker</sourceDirectory>
-					<images>
-						<image>
-							<alias>${project.artifactId}</alias>
-							<name>${docker.repository.name}:${project.version}</name>
-							<build>
-								<from>java:8-jre</from>
-								<maintainer>phauer</maintainer>
-								<assembly>
-									<descriptor>docker-assembly.xml</descriptor>
-								</assembly>
-								<ports>
-									<port>${docker.port}</port>
-								</ports>
-								<cmd>
-									<shell>java -jar \
-										/maven/${project.build.finalName}.jar server
-										\
-										/maven/docker-config.yml</shell>
-								</cmd>
-							</build>
-							<run>
-								<!-- later more -->
-							</run>
-						</image>
-					</images>
-				</configuration>
-			</plugin>
+	            <groupId>org.jolokia</groupId>
+	            <artifactId>docker-maven-plugin</artifactId>
+	            <version>0.13.3</version>
+	            <configuration>
+	                    <sourceDirectory>/src/main/docker</sourceDirectory>
+	                    <images>
+                           <image>
+					            <alias>${project.artifactId}</alias>
+					            <name>${docker.repository.name}:${project.version}</name>
+					            <build>
+					                <from>java:8-jre</from>
+					                <maintainer>phauer</maintainer>
+					                <assembly>
+					                    <descriptor>docker-assembly.xml</descriptor>
+					                </assembly>
+					                <ports>
+					                                            <port>${docker.port}</port>
+					                                    </ports>
+					                <cmd>
+					                    <shell>java -jar \
+					                        /maven/${project.build.finalName}.jar server \
+					                        /maven/docker-config.yml</shell>
+					                </cmd>
+					            </build>
+					            <run>
+					            <!-- later more -->
+					            </run>
+	        			</image>
+	            	</images>
+	            </configuration>
+	    	</plugin>
 		</plugins>
 	</build>
 
