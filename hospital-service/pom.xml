@@ -26,7 +26,7 @@
 		<docker.registry.name></docker.registry.name><!-- leave empty for docker 
 			hub; use e.g. "localhost:5000/" for a local docker registry -->
 		<docker.repository.name>${docker.registry.name}anoophp/${project.artifactId}</docker.repository.name>
-		<docker.port>8761</docker.port>
+		<docker.port>7777</docker.port>
 	</properties>
 
 	<dependencies>
