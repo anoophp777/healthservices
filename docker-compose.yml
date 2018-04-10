@@ -1,0 +1,11 @@
+version: '2'
+services:
+    eureka:
+        image: anoophp/eureka-service:0.0.1-SNAPSHOT
+        container_name: eureka
+        ports:
+        - "8761:8761"
+        environment:
+            - "SPRING_PROFILES_ACTIVE=local"
+       	
+       	
